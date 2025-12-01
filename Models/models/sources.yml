@@ -1,0 +1,11 @@
+sources:
+  - name: raw
+    description: Raw Airbnb and Census data
+    database: postgres  
+    schema: brz
+    tables:
+      - name: raw_listings
+      - name: raw_census_g01
+      - name: raw_census_g02
+      - name: raw_code
+      - name: raw_suburb

@@ -1,0 +1,17 @@
+# dbt artifacts
+target/
+dbt_modules/
+logs/
+dbt_packages/
+manifest.json
+run_results.json
+profiles.yml
+*.dbt
+# Python/venv
+.venv/
+__pycache__/
+*.pyc
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
