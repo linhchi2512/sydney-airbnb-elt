@@ -18,6 +18,48 @@ Tasks and Process
 - Census tables G01 and G02 at LGA level.
 - LGA code and suburb mapping file.
 
+Architecture at a glance
+------------------------
+```mermaid
+flowchart LR
+    subgraph Sources
+        A[Airbnb CSVs (05_2020..04_2021)]
+        B[Census G01/G02]
+        C[LGA/Suburb mapping]
+    end
+    subgraph Airflow
+        D[Airflow DAG<br/>Bronze load]
+    end
+    subgraph Warehouse
+        E[Postgres<br/>Bronze raw tables]
+        F[dbt Silver models<br/>cleaned tables]
+        G[dbt Snapshots<br/>SCD2 dims]
+        H[dbt Gold fact/dim]
+    end
+    subgraph Marts
+        I[dm_listing_neighbourhood]
+        J[dm_property_type]
+        K[dm_host_neighbourhood]
+    end
+    subgraph Consumers
+        L[Ad-hoc SQL (Part 4)]
+    end
+
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    H --> J
+    H --> K
+    I --> L
+    J --> L
+    K --> L
+```
+
 ### Part 1: Airflow → Postgres (Bronze)
 1) Upload to Airflow bucket: first month Airbnb file (`05_2020.csv`), Census datasets, and LGA mapping.  
 2) In Postgres, create Bronze schema and raw tables (via DBeaver).  
@@ -53,4 +95,3 @@ Provide SQL answers and results (with screenshots) for:
 3) Best listing type (property type, room type, accommodates) for the top 15 listing_neighbourhoods (by avg estimated revenue per active listing) to maximize number of stays.  
 4) For multi-listing hosts in Vic: are listings concentrated in the same LGA or spread across LGAs?  
 5) For single-listing hosts in Vic: does revenue over the last 12 months cover the annualized median mortgage repayment in the LGA? Which LGA has the highest percentage of hosts that can cover it?
-
