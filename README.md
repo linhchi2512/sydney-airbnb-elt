@@ -43,12 +43,6 @@ Metrics and Definitions
 - Estimated revenue per active listing = stays * price.  
 - Estimated revenue per host = total estimated revenue per active listing / total distinct hosts.
 
-Practical notes
----------------
-- Truncate tables before first DAG run; respect load order for dimensions then facts.  
-- Use snapshots for SCD in dimensions; apply `dbt run --full-refresh` when recreating models.  
-- When joining facts to dimensions in datamart views, use SCD2 validity windows.
-
 ### Part 3: Load remaining Airbnb data
 - Run the Airflow DAG month-by-month in chronological order; trigger dbt job after each load to preserve sequencing and integrity.
 
@@ -60,28 +54,3 @@ Provide SQL answers and results (with screenshots) for:
 4) For multi-listing hosts in Vic: are listings concentrated in the same LGA or spread across LGAs?  
 5) For single-listing hosts in Vic: does revenue over the last 12 months cover the annualized median mortgage repayment in the LGA? Which LGA has the highest percentage of hosts that can cover it?
 
-Deliverables
-------------
-1) Part 1 SQL: `part_1.sql` with all Postgres queries.  
-2) Airflow DAG (Parts 1 & 3 combined) as a single DAG file (dbt trigger via Airflow not required).  
-3) Part 4 SQL: `part_4.sql` with all analysis queries.  
-4) dbt Cloud files: `Models/`, `Snapshots/`, and `dbt_project.yml`.  
-5) Handover report (≤3000 words; tables/figures excluded).  
-6) Any additional relevant files.  
-- Package everything as `Assignment_3_FirstName_LastName.zip`.
-
-Handover report guidance
-------------------------
-- High-level project overview.  
-- Step-by-step explanation of pipeline/design decisions.  
-- Issues/bugs faced and how they were solved.  
-- Answers to business questions with evidence.  
-- Include relevant screenshots/diagrams/flows.
-
-Assessment
-----------
-- Quality of code (Python/SQL/dbt); executable and well commented; warehouse layers/facts/dimensions/SCD correct.  
-- Justification of transformations, formats, storage, DAG structure; evidence for accuracy; follows handover guidelines.  
-- Quality of findings and recommendations for business questions.  
-- Clarity and professionalism of the report (within length limit).  
-- Due date: submit before 23 October on Canvas; late penalty 10 pts/day.
